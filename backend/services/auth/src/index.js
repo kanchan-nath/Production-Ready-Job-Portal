@@ -5,10 +5,11 @@ dotenv.config({
     path: "./.env"
 })
 
-// app.get("/", ()=>{
-//     console.log("Hello World")
-// })
+app.get("/", (req, res)=>{
+    console.log("Hello World")
+    res.send("Hello World!")
+})
 
-app.listen(3000, ()=>{
-    console.log("Server is running at port 3000")
+app.listen(process.env.PORT, ()=>{
+    console.log(`Server is running at Port ${process.env.PORT}`)
 })
