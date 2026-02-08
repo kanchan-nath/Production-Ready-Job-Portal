@@ -1,6 +1,6 @@
 import React from 'react';
 import '../styles/Header.css';
-
+import { Link } from 'react-router-dom';
 const Header = () => {
     return (
         <header className="header">
@@ -27,15 +27,15 @@ const Header = () => {
                 </div>
 
                 <nav className="header-nav">
-                    <a href="#home" className="nav-link">Home</a>
+                    <a href="/" className="nav-link">Home</a>
                     <a href="#jobs" className="nav-link">Jobs</a>
                     <a href="#companies" className="nav-link">Companies</a>
                     <a href="#about" className="nav-link">About</a>
                 </nav>
 
                 <div className="header-actions">
-                    <button className="btn-secondary">Sign In</button>
-                    <button className="btn-primary">Apply Now</button>
+                    <button className="btn-secondary">Recruter Sign In</button>
+                    <button className="btn-primary">Log In</button>
                 </div>
             </div>
         </header>

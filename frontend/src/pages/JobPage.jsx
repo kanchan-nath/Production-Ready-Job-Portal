@@ -44,7 +44,7 @@
                     setShowForm(false);
                 })
                 .catch((err) => console.log("API Fetched Failed:\n",err));
-                navigate("/all-jobs")
+                navigate("/admin")
         };
 
 
@@ -117,19 +117,7 @@
                     </div>
                 )}
 
-                {/* <div className="jobs-list">
-                    {jobs.map((job) => (
-                        <div key={job._id} className="job-card">
-                            <h3>{job.title}</h3>
-                            <p><strong>{job.company}</strong></p>
-                            <p>{job.location} | {job.salary}</p>
-                            <p>{job.jobType} | {job.experience}</p>
-                            <p>{job.description}</p>
-                            <p>{job.skills.join(', ')}</p>
-                            <button onClick={() => deleteJob(job._id)} className="btn-danger">Delete</button>
-                        </div>
-                    ))}
-                </div> */}
+                
             </div>
         );
     };

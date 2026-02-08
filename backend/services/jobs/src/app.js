@@ -1,5 +1,31 @@
 import express from "express"
+import cors from "cors"
 
 const app = express()
 
-export {app}
+// Middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.use(cors({
+    origin: 'http://localhost:5173',
+    credentials: true
+}));
+
+// Routes
+import jobRoutes from "./routes/job.route.js"
+import applicationRoutes from "./routes/application.route.js"
+import userRoutes from "./routes/user.route.js"
+import adminRoutes from "./routes/admin.route.js"
+
+app.use("/api/v1", jobRoutes)
+app.use("/api/v1", applicationRoutes)
+app.use("/api/v1", userRoutes)
+app.use("/api/v1/admin", adminRoutes)
+
+// Health check endpoint
+app.get("/api/v1/health", (req, res) => {
+    res.status(200).json({ message: "Server is running" })
+})
+
+export { app }
