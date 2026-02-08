@@ -1,24 +1,9 @@
-import { Router } from "express";
-import {
-    createApplication,
-    getAllApplications,
-    getApplicationsByUser,
-    updateApplicationStatus
-} from "../controllers/application.controller.js";
-// import { checkJwt } from "../middleware/auth.middleware.js";
-
+import {Router} from "express";
+import {Application} from "../models/application.model.js";
+import { createApplication } from "../controllers/application.controller.js"
 const router = Router();
 
-router.route("/applications")
-    .post(createApplication);
-
-router.route("/applications/user/me")
-    .get( getApplicationsByUser);
-
-router.route("/applications/job/:jobId")
-    .get(getAllApplications);
-
-router.route("/applications/:id")
-    .put( updateApplicationStatus);
+// POST /api/applications
+router.post("/applications",createApplication);
 
 export default router;

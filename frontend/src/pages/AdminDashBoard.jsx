@@ -30,7 +30,7 @@ const AdminDashBoard = () => {
       <aside className="admin-sidebar">
         <h2 className="sidebar-title">Admin</h2>
         <nav className="sidebar-nav">
-          <Link to="/jobs">Create Job</Link>
+          <Link to="/job">Create Job</Link>
           <a href="/admin/jobs" className="active">All Jobs</a>
         </nav>
       </aside>

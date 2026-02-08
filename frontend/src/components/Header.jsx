@@ -1,28 +1,29 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useAuth0 } from '@auth0/auth0-react';
+import { useNavigate } from 'react-router-dom';
 import '../styles/Header.css';
-import { Link } from 'react-router-dom';
+
+const ADMIN_EMAILS = ["kanchan.nath.act@gmail.com"]; // list of allowed admin emails
+
 const Header = () => {
+    const { loginWithRedirect, logout, isAuthenticated, user, isLoading } = useAuth0();
+    const navigate = useNavigate();
+
+    const handleAdminLogin = async () => {
+        await loginWithRedirect();
+    };
+
+    // Redirect admin to /admin after login
+    useEffect(() => {
+        if (!isLoading && isAuthenticated && user && ADMIN_EMAILS.includes(user.email)) {
+            navigate('/admin');
+        }
+    }, [isAuthenticated, isLoading, user, navigate]);
+
     return (
         <header className="header">
             <div className="header-container">
-
                 <div className="header-logo">
-                    <svg 
-                    width="32" 
-                    height="32" 
-                    viewBox="0 0 32 32" 
-                    fill="none" 
-                    xmlns="http://www.w3.org/2000/svg">
-                        <circle 
-                        cx="16" 
-                        cy="16" 
-                        r="14" 
-                        stroke="currentColor" 
-                        strokeWidth="2" 
-                        />
-
-                        <path d="M12 16h8M16 12v8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                    </svg>
                     <span className="logo-text"><a href="/">JobHub</a></span>
                 </div>
 
@@ -34,8 +35,31 @@ const Header = () => {
                 </nav>
 
                 <div className="header-actions">
-                    <button className="btn-secondary">Recruter Sign In</button>
-                    <button className="btn-primary">Log In</button>
+                    {!isAuthenticated ? (
+                        <button
+                            className="btn-secondary"
+                            onClick={handleAdminLogin}
+                        >
+                            Recruiter Sign In
+                        </button>
+                    ) : (
+                        <>
+                            {ADMIN_EMAILS.includes(user.email) ? (
+                                <button
+                                    className="btn-primary"
+                                    onClick={() =>
+                                        logout({ logoutParams: { returnTo: window.location.origin } })
+                                    }
+                                >
+                                    Log Out
+                                </button>
+                            ) : (
+                                <span style={{ color: 'red', fontWeight: 'bold' }}>
+                                    You are not authorized
+                                </span>
+                            )}
+                        </>
+                    )}
                 </div>
             </div>
         </header>
