@@ -3,7 +3,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Header.css';
 
-const ADMIN_EMAILS = ["kanchan.nath.act@gmail.com"]; // list of allowed admin emails
+const ADMIN_EMAILS = ["kanchan.nath.act@gmail.com"];
 
 const Header = () => {
     const { loginWithRedirect, logout, isAuthenticated, user, isLoading } = useAuth0();
@@ -13,7 +13,6 @@ const Header = () => {
         await loginWithRedirect();
     };
 
-    // Redirect admin to /admin after login
     useEffect(() => {
         if (!isLoading && isAuthenticated && user && ADMIN_EMAILS.includes(user.email)) {
             navigate('/admin');
@@ -24,7 +23,9 @@ const Header = () => {
         <header className="header">
             <div className="header-container">
                 <div className="header-logo">
-                    <span className="logo-text"><a href="/">JobHub</a></span>
+                    <span className="logo-text">
+                        <a href="/">JobHub</a>
+                        </span>
                 </div>
 
                 <nav className="header-nav">
@@ -53,10 +54,14 @@ const Header = () => {
                                 >
                                     Log Out
                                 </button>
-                            ) : (
-                                <span style={{ color: 'red', fontWeight: 'bold' }}>
-                                    You are not authorized
-                                </span>
+                                ) : (<button
+                                    className="btn-primary"
+                                    onClick={() =>
+                                        logout({ logoutParams: { returnTo: window.location.origin } })
+                                    }
+                                >
+                                    Log Out
+                                </button>
                             )}
                         </>
                     )}
