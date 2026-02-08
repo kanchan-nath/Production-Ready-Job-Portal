@@ -1,7 +1,7 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { Job } from "../models/job.model.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
-
+import mongoose from "mongoose";
 const getAllJobs = asyncHandler(async (req, res) => {
     const jobs = await Job.find().sort({ postedDate: -1 });
     console.log(jobs)
@@ -28,11 +28,6 @@ const createNewJob = asyncHandler(async (req, res) => {
         deadline
     } = req.body;
 
-    
-    // if (!title || !description || !company || !location || !salary || !jobType || !experience) {
-    //     return res.status(400).json(new ApiResponse(400, null, "Required fields missing"));
-    // }
-
     const job = await Job.create({
         title: title ? title : "",
         description: description ? description : "",
@@ -48,7 +43,6 @@ const createNewJob = asyncHandler(async (req, res) => {
         benefits: Array.isArray(benefits) ? benefits : [],
         aboutCompany: aboutCompany ? aboutCompany : "",
         deadline: deadline ? deadline : "",
-        createdBy: req.user.sub
     });
 
 
@@ -69,7 +63,7 @@ const deleteJob = asyncHandler(async (req, res) => {
 
 const getJobById = asyncHandler(async(req, res) => {
     const job = await Job.findById(req.params.id)
-        .populate('createdBy', 'name email company');
+        .populate('createdAt', 'name email company');
     
     if (!job) {
         return res.status(404).json(new ApiResponse(404, null, "Job not found"));

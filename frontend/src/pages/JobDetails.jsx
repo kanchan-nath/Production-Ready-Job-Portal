@@ -20,10 +20,10 @@
 
         const getJobById = () => {
             axios
-                .get(`${API_URL}/jobs/${jobId}`)
+                .get(API_URL + `/jobs/${jobId}`)
                 .then((res) => {
                     setJob(res.data.data);
-                    checkDeadline(res.data.data.deadline);
+                    // checkDeadline(res.data.data.deadline);
                 })
                 .catch((err) => {
                     setError(err.message);

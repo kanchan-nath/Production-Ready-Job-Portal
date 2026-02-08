@@ -1,21 +1,17 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { Application } from "../models/application.model.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
+import mongoose from "mongoose";
 
 const createApplication = asyncHandler(async(req, res) => {
-    console.log("req.body:", req.body);
-    console.log("req.body:");
-
-
     const { fullName, email, phone, resume, coverLetter, jobId } = req.body;
-    
 
     const existingApplication = await Application.findOne({ jobId, email });
     if (existingApplication) {
         return res.status(400).json(new ApiResponse(400, null, "You have already applied for this job"));
     }
 
-    const newApplication = new Application.create({
+    const newApplication = await Application.create({
         fullName,
         email,
         phone,
@@ -23,10 +19,6 @@ const createApplication = asyncHandler(async(req, res) => {
         coverLetter,
         jobId
     });
-
-    
-    // Increment applications count
-    await Job.findByIdAndUpdate(jobId, { $inc: { applicationsCount: 1 } });
 
     return res
     .status(201)

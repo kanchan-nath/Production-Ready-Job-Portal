@@ -42,10 +42,6 @@ const jobSchema = new mongoose.Schema({
     deadline: {
         type: Date,
     },
-    createdBy: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-    },
     isActive: {
         type: Boolean,
         default: true
