@@ -4,7 +4,6 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import mongoose from "mongoose";
 const getAllJobs = asyncHandler(async (req, res) => {
     const jobs = await Job.find().sort({ postedDate: -1 });
-    console.log(jobs)
     return res
         .status(200)
         .json(new ApiResponse(200, jobs, "Jobs fetched successfully"));
